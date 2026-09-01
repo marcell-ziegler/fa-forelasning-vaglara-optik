@@ -1,0 +1,157 @@
+#import "@preview/touying:0.7.3": *
+#import themes.simple: *
+#import "@preview/codly:1.3.0": *
+#import "@preview/codly-languages:0.1.10": *
+#import "@preview/cetz:0.5.2"
+#import "@preview/lovelace:0.3.1": *
+#import "@preview/fletcher:0.5.8" as fletcher: diagram, edge, node
+#import fletcher.shapes: circle, diamond, pill, rect
+#import "@preview/zero:0.6.1": num, zi
+#import "@preview/zap:0.5.0" as zap
+
+
+#let battery(name, ..params) = {
+  let const = (w: .2, h: 1)
+
+  let draw(ctx, position, style) = {
+    zap.interface(
+      (-const.w / 2, -const.h / 2),
+      (const.w / 2, const.h / 2),
+      io: position.len() < 2,
+    )
+
+    // pass style to entire scope: `cetz.draw.set-style(..style)`
+    // or just a single item:
+    // zap.cetz.draw.rect("bounds.north-east", "bounds.south-west", ..style)
+    zap.cetz.draw.line("bounds.north-west", "bounds.south-west")
+    zap.cetz.draw.line(
+      (rel: (0, -const.h / 4), to: "bounds.north-east"),
+      (rel: (0, const.h / 4), to: "bounds.south-east"),
+    )
+  }
+  zap.component("resistor", name, draw: draw, ..params)
+}
+#let lamp(name, ..params) = {
+  let const = (w: 1.2, h: 1)
+
+  let draw(ctx, position, style) = {
+    zap.interface(
+      (-const.w / 2, -const.h / 2),
+      (const.w / 2, const.h / 2),
+      io: position.len() < 2,
+    )
+
+    // pass style to entire scope: `cetz.draw.set-style(..style)`
+    zap.cetz.draw.set-style(..style)
+    // or just a single item:
+    // zap.cetz.draw.rect("bounds.north-east", "bounds.south-west", ..style)
+    zap.cetz.draw.circle("bounds.west", anchor: "west", radius: const.w / 2, name: "c1")
+    let r = const.w / 2
+    zap.cetz.draw.line((angle: 45deg, radius: r), (angle: -90deg - 45deg, radius: r))
+    zap.cetz.draw.line((angle: -45deg, radius: r), (angle: 90deg + 45deg, radius: r))
+  }
+  zap.component("resistor", name, draw: draw, ..params)
+}
+
+// cetz and fletcher bindings
+#let cetz-canvas = touying-reducer.with(reduce: cetz.canvas, cover: cetz.draw.hide.with(bounds: true))
+#let fletcher-diagram = touying-reducer.with(reduce: fletcher.diagram, cover: fletcher.hide)
+
+#let pseudocode-list = pseudocode-list.with(hooks: .5em, line-gap: .7em)
+
+#let au-blå = rgb("#00205b")
+
+// #let volt = zi.declare("V")
+// #let amp = zi.declare("A")
+// #let ohm = zi.declare($Omega$)
+#let degC = zi.declare($degree"C"$)
+
+#let template(footer: [], handout: false, doc) = {
+  show figure.caption: set text(size: 12pt, fill: luma(50%))
+  show link: it => text(fill: blue, underline(it))
+
+  show: codly-init.with()
+  show raw.where(block: false): it => {
+    set text(fill: purple.darken(30%))
+    box(
+      fill: luma(94%),
+      inset: (x: 3pt, y: 0pt),
+      outset: (y: 5pt),
+      radius: 2pt,
+      it,
+    )
+  }
+  show raw.where(lang: "stdout"): it => {
+    codly(number-format: none)
+    it
+    codly(number-format: numbering.with("1"))
+  }
+
+  set table(
+    inset: 10pt,
+    stroke: (x, y) => {
+      if y == 1 {
+        (top: 2pt + black)
+      } else if y > 1 {
+        (top: 1pt + black)
+      }
+
+      if x > 0 {
+        (left: 1pt + black)
+      }
+    },
+    fill: (x, y) => {
+      if calc.odd(y) {
+        luma(92%)
+      } else {
+        none
+      }
+    },
+  )
+  show table.header: strong
+
+  set list(marker: ([#move(scale(text(fill: au-blå, sym.star.op), 150%), dy: -.15em)], [‣], [--]))
+
+  show image: box.with(radius: 10pt, clip: true)
+
+  set quote(block: true)
+  show quote.where(block: true): it => {
+    set align(center)
+    block(width: 95%, { ["] + h(0pt, weak: true) + text(style: "italic", it.body) + h(0pt, weak: true) + ["] })
+    if it.attribution != none {
+      set align(right)
+      set text(fill: luma(30%))
+      [-- #it.attribution]
+    }
+  }
+
+  show: simple-theme.with(
+    aspect-ratio: "16-9",
+    footer: footer,
+    config-colors(
+      primary: color.hsl(200deg, 80%, 40%, 100%),
+      secondary: rgb("#ffc600"),
+    ),
+    config-common(
+      preamble: {
+        codly(
+          languages: (
+            py: (name: "Python", color: blue.lighten(30%)),
+            cpp: (name: "C++", color: blue),
+            yasm: (name: "x86_64 Assembly", color: gray),
+            gcc_ir: (name: "GCC Intermeidate Representation", color: gray),
+            stdout: (name: "stdout", color: gray),
+          ),
+          fill: luma(98%),
+          stroke: none,
+        )
+      },
+      handout: handout,
+      scale-list-items: 0.95,
+      show-notes-on-second-screen: if (not handout) { right } else { none },
+    ),
+  )
+
+  set text(size: 22pt, lang: "sv")
+  [#doc]
+}
