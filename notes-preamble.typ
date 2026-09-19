@@ -1,12 +1,13 @@
 #import "@preview/codly:1.3.0": *
 #import "@preview/codly-languages:0.1.10": *
 #import "@preview/cetz:0.5.2"
+#import "@preview/cetz-plot:0.1.4": plot
 #import "@preview/lovelace:0.3.1": *
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, edge, node
 #import fletcher.shapes: circle, diamond, pill, rect
 #import "@preview/zero:0.6.1": num, zi
 #import "@preview/lilaq:0.6.0" as lq
-
+#import "@preview/showybox:2.0.4": showybox
 
 
 #let pseudocode-list = pseudocode-list.with(hooks: .5em, line-gap: .7em)
@@ -14,6 +15,51 @@
 #let au-blå = rgb("#00205b")
 
 #let degC = zi.declare($degree"C"$)
+
+#let sats-counter = counter(figure.where(kind: "sats"))
+#let def-counter = counter(figure.where(kind: "def"))
+#let exm-counter = counter(figure.where(kind: "exm"))
+
+#let reset-theorem-counters(it) = {
+  sats-counter.update(0)
+  def-counter.update(0)
+  exm-counter.update(0)
+  it
+}
+
+#let theorem-numbering(n) = context numbering("1.1", counter(heading).get().first(), n)
+
+#let theorem-box-style(color) = it => showybox(
+  frame: (
+    title-color: color.darken(10%),
+    body-color: color.lighten(88%),
+    border-color: color.darken(20%),
+  ),
+  title-style: (
+    color: white,
+    weight: "bold",
+  ),
+  title: [
+    #it.supplement #it.counter.display(it.numbering)
+    #if it.caption != none [--- #it.caption.body]
+  ],
+  it.body,
+)
+
+#let theorem-box(kind, default-title, body, title: none, label: none) = {
+  let fig = figure(
+    kind: kind,
+    supplement: default-title,
+    numbering: theorem-numbering,
+    caption: title,
+    body,
+  )
+  if label != none { [#fig#label] } else { fig }
+}
+
+#let sats = theorem-box.with("sats", "Sats")
+#let def = theorem-box.with("def", "Definition")
+#let exm = theorem-box.with("exm", "Exempel")
 
 #let template(doc) = {
   show figure.caption: set text(size: 12pt, fill: luma(50%))
@@ -74,6 +120,17 @@
     }
   }
 
-  set text(lang: "sv")
+  set text(lang: "sv", size: 12pt)
+  set heading(numbering: "1.")
+  show heading.where(depth: 1): set text(size: 22pt)
+  show heading.where(depth: 1): set block(below: .8em)
+  show heading.where(depth: 2): set text(size: 18pt)
+  show heading.where(depth: 2): set block(below: .8em)
+  show heading.where(level: 1): reset-theorem-counters
+
+  show figure.where(kind: "sats"): theorem-box-style(blue)
+  show figure.where(kind: "def"): theorem-box-style(rgb("#fed644"))
+  show figure.where(kind: "exm"): theorem-box-style(green)
+
   [#doc]
 }
