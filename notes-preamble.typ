@@ -16,6 +16,16 @@
 
 #let degC = zi.declare($degree"C"$)
 
+#let rule(color: luma(40%)) = {
+  align(center, table(
+    columns: 2,
+    stroke: none,
+    column-gutter: 5%,
+    inset: 0pt,
+    line(length: 100%, stroke: color + 1pt), line(length: 100%, stroke: color + 1pt),
+  ))
+}
+
 #let sats-counter = counter(figure.where(kind: "sats"))
 #let def-counter = counter(figure.where(kind: "def"))
 #let exm-counter = counter(figure.where(kind: "exm"))
@@ -121,10 +131,15 @@
   }
 
   set text(lang: "sv", size: 12pt)
+  // set page("a5", margin: (y: 1.5cm, inside: 1.5cm / 1.5, outside: 1.5cm), numbering: "1.")
+
   set heading(numbering: "1.")
-  show heading.where(depth: 1): set text(size: 22pt)
+
+  set enum(numbering: "1.1.", full: true)
+
+  show heading.where(depth: 1): set text(size: 20pt)
   show heading.where(depth: 1): set block(below: .8em)
-  show heading.where(depth: 2): set text(size: 18pt)
+  show heading.where(depth: 2): set text(size: 16pt)
   show heading.where(depth: 2): set block(below: .8em)
   show heading.where(level: 1): reset-theorem-counters
 
