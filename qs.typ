@@ -347,7 +347,7 @@ Månen upptar en vinkel på ungefär $0.52 degree$ på himlen. Den fotograferas 
 #facit[
   *Facit:* Månen är ett objekt i oändligheten, så $h' = f tan alpha$ med $alpha = 0.26 degree$ (från axeln till månens kant).
   + Diametern $2 f tan 0.26 degree approx 0.45 "mm"$ för $f = 50 "mm"$ och $approx 2.7 "mm"$ för $f = 300 "mm"$.
-  + $12 "mm" = f tan 0.26 degree$ ger $f approx 2.6 "m"$. En så lång lins vore opraktisk, vilket motiverar sammansatta system (se sista uppgifterna) eller teleskop.
+  + $12 "mm" = f tan 0.26 degree$ ger $f approx 2.6 "m"$. En så lång lins vore opraktisk, vilket motiverar sammansatta linssystem eller teleskop.
 ]
 
 = Den grunda bassängen
@@ -433,34 +433,6 @@ _Ledning:_ Bilden från lins 1 fungerar som objekt för lins 2.
   *Facit:*
   + Lins 1: $s'_1 = (15 dot 10) / (15 - 10) = 30 "cm"$. Denna bild ligger $s_2 = 40 - 30 = 10 "cm"$ framför lins 2, alltså innanför dess fokallängd. Lins 2: $s'_2 = (10 dot 15) / (10 - 15) = -30 "cm"$. Slutbilden är virtuell och ligger $30 "cm"$ framför lins 2, dvs. $10 "cm"$ bakom lins 1.
   + $M_1 = -30 / 15 = -2$, $M_2 = -(-30) / 10 = 3$. $M = M_1 M_2 = -6$: sexfaldigt förstorad och upp och ned.
-]
-
-= Teleobjektivet
-Ett _teleobjektiv_ består av en konvex lins med $f_1 = 20 "cm"$ följd av en konkav lins med $f_2 = -10 "cm"$ på avståndet $d = 15 "cm"$.
-+ Beräkna systemets ekvivalenta fokallängd $f_e$.
-+ Objektivet riktas mot ett objekt i oändligheten. Hur långt bakom den konkava linsen ska kamerasensorn placeras?
-+ Hur långt blir objektivet totalt (från första linsen till sensorn)? Jämför med en enkel lins med samma fokallängd som $f_e$, och förklara varför konstruktionen är användbar, t.ex. för månbilden i uppgift 20.
-
-#facit[
-  *Facit:*
-  + $f_e = (f_1 f_2) / (f_1 + f_2 - d) = (20 dot (-10)) / (20 - 10 - 15) = (-200) / (-5) = 40 "cm"$.
-  + Lins 1 avbildar objektet i sitt brännplan, $20 "cm"$ bakom lins 1, dvs. $5 "cm"$ _bakom_ lins 2. Alltså är $s_2 = d - f_1 = -5 "cm"$ (ett virtuellt objekt). $s'_2 = (s_2 f_2) / (s_2 - f_2) = ((-5)(-10)) / (-5 + 10) = 10 "cm"$.
-  + Totala längden är $15 + 10 = 25 "cm"$, medan en enkel lins med $f = 40 "cm"$ kräver $40 "cm"$ till sensorn. Teleobjektivet ger alltså samma bildstorlek ($h' = f_e tan alpha$) i ett betydligt kortare paket.
-]
-
-= En lins under vatten
-Linsen från uppgift 16 ($n = 1.50$, $r_1 = 20 "cm"$, $r_2 = -30 "cm"$) sänks ned i vatten ($n = 1.33$).
-+ Använd satsen för avbildning genom en sfärisk gränsyta på var och en av linsens två ytor för att beräkna linsens brytningsstyrka i vatten.
-+ Var hamnar bilden av ett mycket avlägset objekt? Jämför med fokallängden i luft.
-+ Använd resultatet för att förklara varför allt ser suddigt ut när man öppnar ögonen under vatten utan simglasögon.
-
-_Ledning:_ Precis som i härledningen av $P = 1 / s + 1 / s'$ gäller för en tunn lins att $s_2 = -s'_1$. Omgivningen är nu vatten på båda sidor.
-
-#facit[
-  *Facit:*
-  + $P_1 = (1.50 - 1.33) / 0.20 = 0.85 "D"$ och $P_2 = (1.33 - 1.50) / (-0.30) approx 0.57 "D"$, så $P approx 1.42 "D"$ (mot $4.17 "D"$ i luft).
-  + Summering av ytornas ekvationer ger $1.33 / s + 1.33 / s' = P$. Med $s -> infinity$ fås $s' = 1.33 / 1.42 approx 0.94 "m"$, nästan fyra gånger längre än $24 "cm"$ i luft.
-  + Brytningen beror på _skillnaden_ i refraktionsindex. Hornhinnan står för det mesta av ögats brytningsstyrka, och den har ungefär samma refraktionsindex som vatten. Under vatten förlorar ögat därför nästan all sin brytning och bilden hamnar långt bakom näthinnan. Simglasögon återställer ett luftlager framför ögat.
 ]
 
 = Optisk fiber
