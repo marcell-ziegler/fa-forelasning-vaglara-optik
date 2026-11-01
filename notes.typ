@@ -342,10 +342,16 @@ Vi går nu vidare till en sista definition för linser: fokallängden.
   $
     1 / f = lim_(s -> infinity) 1 / s + 1 / s' = 1 / s'
   $
-  vilket ju innebär $f = s' = P^(- 1)$.
+  vilket ju innebär $f = s' = 1 / P$.
 ] <def:fokallängd>
 
 @def:fokallängd innebär att fokallängden är definierad som det bildavstånd som uppstår för en given lins när ljusstrålarna åker in från oändligt långt borta.
+
+Vi kan även konstatera att
+$
+  1 / f = P = 1 / s + 1 / s' <==> s' = (s f) / (s - f)
+$
+som ofta är användbart.
 
 === Objekt i oändligheten
 
